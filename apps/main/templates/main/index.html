@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>The Wall</title>
+    {% block css %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css" integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous" />
+{% endblock css %}
+</head>
+
+<body>
+    <nav class="light-blue lighten-1" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="/wall" class="brand-logo">Hello {{current.first_name}}!</a>
+
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/logout">Log Out</a></li>
+                <button ><a href="/wall/create" style="color: #29b6f6">Create a new trip!</a></button>
+            </ul>
+
+
+            <ul id="nav-mobile" class="sidenav">
+                <li><a href="#">Navbar Link</a></li>
+            </ul>
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+
+
+    <div style="border: 10px solid #29b6f6; border-radius: 5px;" class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            <br />
+            <h1 class="header left orange-text">Your trips:</h1>
+            <br><br><br><br><br>
+            {% for trip in myposts %}
+            <div class="container" style="border: 2px solid gray; border-radius: 5px; margin: 10px;">
+                <div class="section">
+                    <!--   Icon Section   -->
+                    <div class="row">
+                        <div>
+                            <div class="icon-block">
+        
+
+                                <p class="light" style="font-size: 20px;">
+                                    Destination:
+                                    <a href="/wall/{{trip.id}}">{{trip.destination}}</a>
+                                </p>
+                                <p class="light" style="font-size: 20px;">
+                                        Plan for trip:
+                                        {{trip.plan}}
+                                    </p>
+                                    <p class="light" style="font-size: 20px;">
+                                        Start Date:
+                                        {{trip.start_date}}
+                                    </p>
+                                    <p class="light" style="font-size: 20px;">
+                                        End Date:
+                                        {{trip.end_date}}
+                                    </p>
+                                <p>
+                                    
+                                    {% if current.id == trip.user.id %}
+                                    <a href="/wall/{{trip.id}}/destroytrip">Remove</a> |
+                                    <a href="/wall/{{trip.id}}/edittrip">Edit</a>
+                                    {% endif %}
+                                    {% if current.id != trip.user.id %}
+                                     <a href="/wall/{{trip.id}}/returntrip">Cancel</a> 
+                                    {% endif%}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+            {% endfor %}
+    </div>
+
+
+    
+    <div style="border: 10px solid #29b6f6; border-radius: 5px;" class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            <br /><br />
+            <h1 class="header left orange-text">Other people's trips</h1>
+            <br><br><br><br><br>
+            
+            {% for trip in allPosts %}
+            {% if trip.userassigned.id != current.id%}
+            <div class="container" style="border: 2px solid gray; border-radius: 5px; margin: 10px;">
+                <div class="section">
+                    <!--   Icon Section   -->
+                    <div class="row">
+                        <div>
+                            <div class="icon-block">
+        
+                                <h4><i class="material-icons">person</i> {{trip.user.first_name}} {{trip.users.last_name}}'s trip post: ({{trip.created_at}}):</h4>
+                                <p class="light" style="font-size: 20px;">
+                                    Destination: <a href="/wall/{{trip.id}}">{{trip.destination}}</a> 
+                                    
+                                </p>
+                                <p class="light" style="font-size: 20px;">
+                                    Plan for trip:
+                                    {{trip.plan}}
+                                </p>
+                                <p class="light" style="font-size: 20px;">
+                                    Start Date:
+                                    {{trip.start_date}}
+                                </p>
+                                <p class="light" style="font-size: 20px;">
+                                    End Date:
+                                    {{trip.end_date}}
+                                </p>
+                                <p>
+                                    
+                                    <a href="/wall/{{trip.id}}/addtrip">Join</a> |
+                                    {% if current.id == trip.user.id %}
+                                    <a href="/wall/{{trip.id}}/destroytrip">Remove</a> |
+                                    <a href="/wall/{{trip.id}}/edittrip">Edit</a>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+            {% endif %}
+            {% endfor %}
+            
+        </div>
+    </div>
+
+
+    {% block javascript %}
+<script
+src="https://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js" integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function(){
+
+// Initialize materialize data picker
+$('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
+$('select').formSelect();
+
+});
+</script>
+{% endblock javascript %}
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login and Register</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login/css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'login/css/materialize.css' %}" />
+</head>
+
+<body>
+    
+    <h1 style="display: flex; justify-content: center;">Welcome! Let's travel!</h1>
+    {% for message in messages%}
+    <h4 style="color: red">{{message}}</h4>
+    {% endfor %}
+
+
+    {% comment %} This is where the register starts {% endcomment %}
+    <div style="display: flex; justify-content: center;">
+        <div class="card mb-3" style="display:inline-block; width:450px">
+            <h3 class="card-header">Registration</h3>
+
+            <div class="card-body">
+                <p class="card-text">
+                    <form action="/register" method="POST">
+                        {% csrf_token %}
+                        <div>
+                            <label>First Name</label>
+                            <input type="text" name="first_name">
+
+                        </div>
+                        <div>
+                            <label>Last Name</label>
+                            <input type="text" name="last_name">
+
+                        </div>
+                        <div>
+                            <label>Email</label>
+                            <input type="email" name="email">
+
+                        </div>
+                        <div>
+                            <label>Password</label>
+                            <input type="password" name="password">
+
+                        </div>
+                        <div>
+                            <label>Confirm Password</label>
+                            <input type="password" name="confirm_password">
+                        </div>
+                        
+
+                    </p>
+            </div>
+
+            <div class="card-footer text-muted">
+                    <button class="btn btn-info" class="z-depth-3" type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+
+{% comment %} This is where the login starts {% endcomment %}
+
+        <div class="card mb-3" style="display:inline-block; width:450px">
+            <h3 class="card-header">Login</h3>
+
+            <div class="card-body">
+                <p class="card-text">
+                    <form action="/login" method="POST">
+                        {% csrf_token %}
+                        <div>
+                            <label>Email</label>
+                            <input type="email" name="email">
+                        </div>
+                        <div>
+                            <label>Password</label>
+                            <input type="password" name="password">
+                        </div>
+                </p>
+            </div>
+            
+            <div class="card-footer text-muted">
+                <button type="submit" class="btn btn-info" class="z-depth-3">Log in</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>

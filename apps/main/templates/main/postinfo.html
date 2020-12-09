@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>The Wall</title>
+    {% block css %}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css" integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous" />
+    {% endblock css %}
+</head>
+
+<body>
+    <nav class="light-blue lighten-1" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="/wall" class="brand-logo">{{current.first_name}}! Read about this trip!</a>
+
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/logout">Log Out</a></li>
+                <li><a href="/wall">Dashboard</a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="sidenav">
+                <li><a href="#">Navbar Link</a></li>
+            </ul>
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+
+    <div style="border: 2px solid gray; border-radius: 5px;">
+            <h2>Hi {{current.first_name}}! Read about this trip! </h2>
+            <div class="container" style="border: 2px solid gray; border-radius: 5px; margin: 10px;">
+                <h4><i class="material-icons">work</i> Destination: "{{trippost.destination}}"</h4>
+                <div class="section">
+                    <!--   Icon Section   -->
+                    <div class="row">
+                        <div>
+                            <div class="icon-block">
+                                
+                                <p class="light" style="font-size: 20px;">
+                                    Start Date:
+                                    {{trippost.start_date}}
+                                </p>
+                                <p class="light" style="font-size: 20px;">
+                                    End Date:
+                                    {{trippost.end_date}}
+                                </p>
+                                <p class="light" style="font-size: 20px;">
+                                    Created on:
+                                    {{trippost.created_at}}
+                                </p>
+                                <p class="light" style="font-size: 20px;">
+                                    Last updated on:
+                                    {{trippost.updated_at}}
+                                </p>
+                                <p class="light" style="font-size: 20px;">
+                                    Plan:
+                                    {{trippost.plan}}
+                                </p>
+                                <p class="light" style="font-size: 20px;">
+                                    Created by:
+                                    {{trippost.user.first_name}}
+                                </p>
+                                
+                                
+
+                                <p>
+
+                                    <a href="/wall/{{trippost.id}}/addtrip">Add to my trips</a> |
+                                    <a href="/wall">Go Back</a>
+                                    {% if current.id == trippost.user.id %}
+                                    | <a href="/wall/{{trippost.id}}/destroytrip">Remove</a> |
+                                    <a href="/wall/{{trippost.id}}/edittrip">Edit</a>
+                                    {% endif %}
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+    
+    </div>
+    
+    {% block javascript %}
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js" integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+    
+    <script>
+    $(document).ready(function(){
+    
+    // Initialize materialize data picker
+    $('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
+    $('select').formSelect();
+    
+    });
+    </script>
+    {% endblock javascript %}
+    </body>
+</body>
+
+</html>

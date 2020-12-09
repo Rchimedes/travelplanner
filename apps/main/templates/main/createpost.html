@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>The Wall</title>
+    {% block css %}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css" integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous" />
+    {% endblock css %}
+</head>
+
+<body>
+        {% for message in messages%}
+        <h4 style="color: red">{{message}}</h4>
+        {% endfor %}
+    <nav class="light-blue lighten-1" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="/wall" class="brand-logo">Hello {{current.first_name}}!</a>
+
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/logout">Log Out</a></li>
+                
+            </ul>
+
+
+            <ul id="nav-mobile" class="sidenav">
+                <li><a href="#">Navbar Link</a></li>
+            </ul>
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+
+    <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            <br /><br />
+            <h1 class="header left orange-text">Create a trip!</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">
+                    <form action="/wall/trippost" method="POST">
+                        {% csrf_token %}
+                        <div class="input-field col s6">
+                            <input id="1" type="text" class="validate" name="destination">
+                            <label for="1">Destination:</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            <input id="2" type="date" value="2019-10-22" class="validate" name="start_date">
+                            <label for="2">Start Date: </label>
+                        </div>
+                        
+                        <div class="input-field col s6">
+                            <input id="3" type="date"  value="2019-10-22" class="validate" name="end_date">
+                            <label for="3">End Date:</label>
+                        </div>
+                        
+
+                        <div class="input-field col s6">
+                            <input id="4" type="textfield" class="validate" name="plan" style="height:200px; overflow:scroll;">
+                            <label for="4">Plan:</label>
+                        </div>
+                            <button class="btn-large waves-effect waves-light orange"><a href="/wall">Cancel</a></button>
+                            <button class="btn-large waves-effect waves-light blue">Submit</button>
+                        </div>
+                    </form>
+                </h5>
+            </div>
+            <br /><br />
+        </div>
+    </div>
+    
+    {% block javascript %}
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js" integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+    
+    <script>
+    $(document).ready(function(){
+    
+    // Initialize materialize data picker
+    $('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
+    $('select').formSelect();
+    
+    });
+    </script>
+    {% endblock javascript %}
+    </body>
+</body>
+
+</html>
